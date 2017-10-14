@@ -1,0 +1,9 @@
+= Katzen-Tracker
+
+== IDE installieren
+
+* Arduino-IDE installieren
+* In Einstellungen: Board Manager http://arduino.esp8266.com/stable/package_esp8266com_index.json hinzufügen
+* Im Board Manager: ESP8266 installieren
+* Board auswählen: NodeMCU 1.0
+
