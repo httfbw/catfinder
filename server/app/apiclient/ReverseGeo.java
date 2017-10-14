@@ -1,6 +1,7 @@
 package apiclient;
 
 import org.w3c.dom.Document;
+import play.Logger;
 import play.libs.ws.WSClient;
 
 import javax.inject.Inject;
@@ -21,11 +22,11 @@ public class ReverseGeo {
                 "&zoom=18&addressdetails=1")
                 .get().thenApply(resp -> {
                     Document doc = resp.asXml();
-                    System.out.println(resp.getBody());
 
                     if (doc.getElementsByTagName("road").getLength()>0) {
                         return doc.getElementsByTagName("road").item(0).getTextContent();
                     }
+                    Logger.debug("Failed lookup. XML was: " + resp.getBody());
                     return "?";
         });
     }
