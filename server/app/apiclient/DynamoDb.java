@@ -11,6 +11,9 @@ import com.google.common.collect.ImmutableMap;
 import com.typesafe.config.Config;
 
 import javax.inject.Inject;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Map;
 
 
@@ -35,7 +38,8 @@ public class DynamoDb {
                 .put("name", new AttributeValue(name))
                 .put("lon", new AttributeValue(Double.toString(lon)))
                 .put("lat", new AttributeValue(Double.toString(lat)))
-                .put("location", new AttributeValue(location))
+                .put("ort", new AttributeValue(location))
+                .put("timestamp", new AttributeValue(Long.toString(Instant.now().getEpochSecond())))
                 .build();
         db.putItem(tableName, item);
     }
