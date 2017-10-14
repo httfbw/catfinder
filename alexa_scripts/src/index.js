@@ -31,6 +31,14 @@ var APP_ID = "amzn1.ask.skill.48373454-436f-483b-a59d-9a8f37935ec7";
  * The AlexaSkill prototype and helper functions
  */
 var AlexaSkill = require('./AlexaSkill');
+var Alexa = require('alexa-sdk');
+var AWS = require('aws-sdk');
+
+AWS.config.loadFromPath('./config.json');
+// Create the DynamoDB service object
+let ddb = new AWS.DynamoDB({apiVersion: '2012-10-08'});
+
+
 
 let catName = "Lotte";
 let ort ="Uhlbach";
@@ -52,7 +60,7 @@ Catfinder.prototype.constructor = Catfinder;
 
 Catfinder.prototype.eventHandlers.onSessionStarted = function (sessionStartedRequest, session) {
     //console.log("onSessionStarted requestId: " + sessionStartedRequest.requestId + ", sessionId: " + session.sessionId);
-
+    
 };
 
 Catfinder.prototype.eventHandlers.onLaunch = function (launchRequest, session, response) {
@@ -98,7 +106,16 @@ Catfinder.prototype.intentHandlers = {
 function handleNewFactRequest(response) {
     
 
-    
+    if(this.attributes['Mietze']) catName = this.attributes['Mietze'];
+    else catName = "Mau";
+    //var local = 0;
+    //if(this.attributes['ort']) ort = this.attributes['ort'];
+    //else local = 1;
+
+    var location = getLocation("Mietze");
+    if(location) ort = location;
+    else ort = "München";
+
     //array [] danit defeniert man listen
     var antworten = [
         catName + " ist gerade in " + ort + ".",
@@ -111,23 +128,54 @@ function handleNewFactRequest(response) {
 
     // Get a random space fact from the space facts list
     var index = Math.floor(Math.random() * antworten.length);
-
     var speechOutput = antworten[index];
-    //if(this.attributes['ort']) ort = this.attributes['ort'];
-    // Create speech output
+
+    //if(local == 1) speechOutput + " die Daten sind aber nicht aus der Datenbank.";
+    
+
     var cardTitle = catName + " wurde gefunden.";
     /*if (index > -1) {
-        this.attributes[catName] = location;
+        this.attributes['ort'] = ort;
     }*/
     response.tellWithCard(speechOutput, cardTitle, speechOutput);
 }
 
+
+function getLocation(requestedName){
+
+    var params = {
+        TableName: 'catfinder',
+        Key: {
+          "name": {
+              "S": "Mietze"
+          }
+        },
+        ProjectionExpression: 'lat, lon'
+    };
+    
+    // Call DynamoDB to read the item from the table
+    ddb.getItem(params, function(err, data) {
+    if (err) {
+      console.log("Error", err);
+      return false;
+    } else {
+      console.log("Success", data.Item);
+      return data.Item.lat.S;
+    }
+  });
+
+
+
+}
+
 // Create the handler that responds to the Alexa Request.
-exports.handler = function (event, context) {
-    //var alexa = AlexaSkill.handler(event, context, callback);
+exports.handler = function (event, context, callback) {
+    var alexa = Alexa.handler(event, context, function(){
+
+    });
     // Create an instance of the SpaceGeek skill.
     var catfinder = new Catfinder();
-    //alexa.dynamoDBTableName = 'catfinder'; // That's it!
+    alexa.dynamoDBTableName = 'catfinder'; // That's it!
     catfinder.execute(event, context);
 };
 
