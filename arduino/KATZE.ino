@@ -35,8 +35,8 @@ void loop() {
  WiFiClient cli;
  if (cli.connect("ploing.de",9000)){
    cli.print(String("POST /position") +
-     "?lat=" + String(weg[schritt*2], 5) +
-     "&lon=" + String(weg[schritt*2 + 1], 5) +
+     "?lon=" + String(weg[schritt*2], 5) +
+     "&lat=" + String(weg[schritt*2 + 1], 5) +
      " HTTP/1.1\r\n" +
      "Host: ploing.de:9000\r\n" +
      "Connection: close\r\n" +
