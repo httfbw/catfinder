@@ -1,0 +1,55 @@
+GetNewFindIntent Wo ist meine Katze
+GetNewFindIntent Wo meine Katze ist
+GetNewFindIntent Wo sich meine Katze befindet
+GetNewFindIntent Wo sich meine Katze aufhält
+GetNewFindIntent Wo sich meine Katze herumtreibt
+GetNewFindIntent Wo der Standort meiner Katze ist
+GetNewFindIntent Wo ist meine Katze
+GetNewFindIntent Wo befindet sich meine Katze
+GetNewFindIntent Wo hält sich meine Katze auf
+GetNewFindIntent Wo treibt sich meine Katze herum
+GetNewFindIntent Wo ist meine Katze
+
+
+
+
+GetNewFindIntent und frage wo meine Katze ist
+GetNewFindIntent und frage Wo sich meine Katze befindtet
+GetNewFindIntent und frage Wo sich meine Katze aufhält
+GetNewFindIntent und frage Wo sich meine Katze herumtreibt
+GetNewFindIntent und frage Wo der Standort meiner Katze ist
+GetNewFindIntent und frage Wo ist meine Katze
+GetNewFindIntent und frage Wo befindet sich meine Katze
+GetNewFindIntent und frage Wo hält sich meine Katze auf
+GetNewFindIntent und frage Wo treibt sich meine Katze herum
+GetNewFindIntent und frage Wo ist meine Katze
+
+
+GetNewFindIntent Wo ist {CAT}
+GetNewFindIntent Wo sich {CAT} befindet
+GetNewFindIntent Wo sich {CAT} aufhält
+GetNewFindIntent Wo sich {CAT} herumtreibt
+GetNewFindIntent Wo der Standort von {CAT} ist
+GetNewFindIntent Wo befindet sich {CAT}
+GetNewFindIntent Wo hält sich {CAT} auf
+GetNewFindIntent Wo treibt sich {CAT} herum
+GetNewFindIntent Wo ist meine  {CAT}
+
+GetNewFindIntent und frage wo {CAT} ist
+GetNewFindIntent und frage wo ist {CAT}
+GetNewFindIntent und frage Wo sich {CAT} befindet
+GetNewFindIntent und frage Wo sich {CAT} aufhält
+GetNewFindIntent und frage Wo sich {CAT} herumtreibt
+GetNewFindIntent und frage Wo der Standort von {CAT} ist
+GetNewFindIntent und frage Wo sich {CAT} aufhält
+GetNewFindIntent und frage wo sich {CAT} herumtreibt
+
+
+GetNewFindIntent und finde meine Katze
+GetNewFindIntent und sage mir wo {CAT} ist
+GetNewFindIntent und sage mir wo {CAT} sich befindet
+GetNewFindIntent und sage mir wo sich meine Katze sich befindet
+GetNewFindIntent und suche den Standort meiner Katze
+GetNewFindIntent und suche den Standort von {CAT}
+GetNewFindIntent und schick mir den Standort von {CAT}
+GetNewFindIntenz und schick mir den Standort von meiner Katze

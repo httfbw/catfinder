@@ -1,0 +1,19 @@
+{
+  "intents": [
+    {
+      "intent": "GetNewFindIntent"
+    },
+    {
+      "intent": "ResetIntent"
+    },
+    {
+      "intent": "AMAZON.HelpIntent"
+    },
+    {
+      "intent": "AMAZON.StopIntent"
+    },
+    {
+      "intent": "AMAZON.CancelIntent"
+    }
+  ]
+}
