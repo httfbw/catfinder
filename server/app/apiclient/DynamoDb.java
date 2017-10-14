@@ -26,7 +26,7 @@ public class DynamoDb {
         credentials = new BasicAWSCredentials(accessKey, secretKey);
     }
 
-    public void putData(String name, double lon, double lat) {
+    public void putData(String name, double lon, double lat, String location) {
         AmazonDynamoDB db = AmazonDynamoDBClientBuilder.standard()
                 .withCredentials(new AWSStaticCredentialsProvider(credentials))
                 .withRegion(Regions.EU_WEST_1)
@@ -35,6 +35,7 @@ public class DynamoDb {
                 .put("name", new AttributeValue(name))
                 .put("lon", new AttributeValue(Double.toString(lon)))
                 .put("lat", new AttributeValue(Double.toString(lat)))
+                .put("location", new AttributeValue(location))
                 .build();
         db.putItem(tableName, item);
     }

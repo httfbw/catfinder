@@ -7,7 +7,7 @@ lazy val root = (project in file(".")).enablePlugins(PlayJava)
 
 scalaVersion := "2.12.2"
 
-libraryDependencies += guice
+libraryDependencies ++= Seq(guice, ws)
 
 libraryDependencies += "com.amazonaws" % "aws-java-sdk" % "1.11.213"
 

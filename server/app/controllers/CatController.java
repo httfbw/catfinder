@@ -1,6 +1,7 @@
 package controllers;
 
 import apiclient.DynamoDb;
+import apiclient.ReverseGeo;
 import com.typesafe.config.Config;
 import play.Logger;
 import play.mvc.Controller;
@@ -13,17 +14,21 @@ import java.util.concurrent.CompletionStage;
 
 public class CatController extends Controller {
     private DynamoDb db;
+    private ReverseGeo rev;
     private String catName;
 
     @Inject
-    public CatController(DynamoDb db, Config conf) {
+    public CatController(DynamoDb db, ReverseGeo rev, Config conf) {
         this.db = db;
+        this.rev = rev;
         catName = conf.getString("cat.name");
     }
 
     public CompletionStage<Result> updatePosition(double lon, double lat) {
         Logger.info("New position lon=" + lon + " lat=" + lat);
-        db.putData(catName, lon, lat);
-        return CompletableFuture.completedFuture(ok());
+        return rev.reverseLookup(lon, lat).thenApply(s -> {
+            db.putData(catName, lon, lat, s);
+            return ok();
+        });
     }
 }
