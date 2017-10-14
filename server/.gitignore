@@ -1,0 +1,16 @@
+### https://raw.github.com/github/gitignore/2bd7d8ec88bc9fad5aca91951826b16118227554/Global/SBT.gitignore
+
+# Simple Build Tool
+# http://www.scala-sbt.org/release/docs/Getting-Started/Directories.html#configuring-version-control
+
+target/
+lib_managed/
+src_managed/
+project/boot/
+.history
+.cache
+
+logs/
+
+.idea/
+
