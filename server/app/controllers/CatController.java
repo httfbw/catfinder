@@ -2,6 +2,7 @@ package controllers;
 
 import apiclient.DynamoDb;
 import com.typesafe.config.Config;
+import play.Logger;
 import play.mvc.Controller;
 import play.mvc.Result;
 
@@ -21,8 +22,8 @@ public class CatController extends Controller {
     }
 
     public CompletionStage<Result> updatePosition(double lon, double lat) {
+        Logger.info("New position lon=" + lon + " lat=" + lat);
         db.putData(catName, lon, lat);
         return CompletableFuture.completedFuture(ok());
     }
 }
-

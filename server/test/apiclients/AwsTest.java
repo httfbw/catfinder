@@ -33,4 +33,3 @@ public class AwsTest extends WithApplication {
         db.putItem(tableName, item);
     }
 }
-
