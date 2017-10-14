@@ -39,11 +39,6 @@ AWS.config.loadFromPath('./config.json');
 let ddb = new AWS.DynamoDB({apiVersion: '2012-10-08'});
 
 
-
-let catName = "Lotte";
-let ort ="Uhlbach";
-let zeit = "5 minuten";
-
 /**
  * SpaceGeek is a child of AlexaSkill.
  * To read more about inheritance in JavaScript, see the link below.
@@ -78,7 +73,7 @@ Catfinder.prototype.eventHandlers.onSessionEnded = function (sessionEndedRequest
 
 Catfinder.prototype.intentHandlers = {
     "GetNewFindIntent": function (intent, session, response) {
-        handleNewFactRequest(response);
+        handleNewFindRequest(intent, response);
     },
 
     "ResetIntent": function (intent, session, response) {
@@ -103,20 +98,47 @@ Catfinder.prototype.intentHandlers = {
 /**
  * Gets a random new fact from the list and returns to the user.
  */
-function handleNewFactRequest(response) {
+function handleNewFindRequest(intent, response) {
     
+    let catName;
+    if(intent.slots.CAT.value)catName = intent.slots.CAT.value;
+    else {
+        var speechOutput = "Leider habe ich den Namen deiner Katze nicht verstanden oder ich kenne sie nicht.";
+        var cardTitle = "Diese Katze kenne ich nicht.";
+        response.tellWithCard(speechOutput, cardTitle, speechOutput);
+        return;
+    } 
 
-    if(this.attributes['Mietze']) catName = this.attributes['Mietze'];
-    else catName = "Mau";
-    //var local = 0;
-    //if(this.attributes['ort']) ort = this.attributes['ort'];
-    //else local = 1;
+    let ort ="Uhlbach";
+    let zeit = "5 minuten";
 
-    var location = getLocation("Mietze");
-    if(location) ort = location;
-    else ort = "München";
+    var params = {
+        TableName: 'catfinder',
+        Key: {
+          "name": {
+              "S": catName
+          }
+        },
+        ProjectionExpression: 'ort, timestamp'
+    };
+    
+    // Call DynamoDB to read the item from the table
+    ddb.getItem(params, function(err, data) {
+        if (err) {
+        console.log("Error", err);
+        } else {
+        console.log("Success", data.Item);
+        ort = data.Item.ort.S;
+        timestamp = data.Item.timestamp.S;
+        }
 
-    //array [] danit defeniert man listen
+        var last = new Date() - timestamp;
+        var date = new Date(timestamp*1000);
+        var hours = date.getHours();
+        var minutes = "0" + date.getMinutes();
+        var seconds = "0" + date.getSeconds();
+
+        //array [] danit defeniert man listen
     var antworten = [
         catName + " ist gerade in " + ort + ".",
        catName + " treibt sich gerade in " + ort + " rum.",
@@ -129,43 +151,12 @@ function handleNewFactRequest(response) {
     // Get a random space fact from the space facts list
     var index = Math.floor(Math.random() * antworten.length);
     var speechOutput = antworten[index];
-
-    //if(local == 1) speechOutput + " die Daten sind aber nicht aus der Datenbank.";
-    
-
     var cardTitle = catName + " wurde gefunden.";
-    /*if (index > -1) {
-        this.attributes['ort'] = ort;
-    }*/
     response.tellWithCard(speechOutput, cardTitle, speechOutput);
-}
 
+    });
 
-function getLocation(requestedName){
-
-    var params = {
-        TableName: 'catfinder',
-        Key: {
-          "name": {
-              "S": "Mietze"
-          }
-        },
-        ProjectionExpression: 'lat, lon'
-    };
     
-    // Call DynamoDB to read the item from the table
-    ddb.getItem(params, function(err, data) {
-    if (err) {
-      console.log("Error", err);
-      return false;
-    } else {
-      console.log("Success", data.Item);
-      return data.Item.lat.S;
-    }
-  });
-
-
-
 }
 
 // Create the handler that responds to the Alexa Request.
