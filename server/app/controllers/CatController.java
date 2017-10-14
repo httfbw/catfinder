@@ -25,8 +25,8 @@ public class CatController extends Controller {
     }
 
     public CompletionStage<Result> updatePosition(double lon, double lat) {
-        Logger.info("New position lon=" + lon + " lat=" + lat);
         return rev.reverseLookup(lon, lat).thenApply(s -> {
+            Logger.info("New position lon=" + lon + " lat=" + lat + " (" + s + ")");
             db.putData(catName, lon, lat, s);
             return ok();
         });
