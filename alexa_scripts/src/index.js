@@ -119,33 +119,33 @@ function handleNewFindRequest(intent, response) {
               "S": catName
           }
         },
-        ProjectionExpression: 'ort, timestamp'
-    };
+        ProjectionExpression: 'ort, zeit'
+      };
     
     // Call DynamoDB to read the item from the table
     ddb.getItem(params, function(err, data) {
         if (err) {
         console.log("Error", err);
         } else {
-        console.log("Success", data.Item);
-        ort = data.Item.ort.S;
-        timestamp = data.Item.timestamp.S;
+            //if(data.item) console.log("Success", data.Item);
+            ort = data.Item.ort.S;
+            timestamp = data.Item.zeit.S;
         }
 
-        var last = new Date() - timestamp;
-        var date = new Date(timestamp*1000);
-        var hours = date.getHours();
-        var minutes = "0" + date.getMinutes();
-        var seconds = "0" + date.getSeconds();
+        
+        var diffInMinutes = Math.round((Math.round((new Date).getTime() / 1000) - parseInt(data.Item.zeit.S)) / 60)      
+        var zeit = diffInMinutes;
 
         //array [] danit defeniert man listen
     var antworten = [
-        catName + " ist gerade in " + ort + ".",
-       catName + " treibt sich gerade in " + ort + " rum.",
-       catName + " befindet sich in " + ort + ".",
-       catName + " treibt sich in " + ort +" herum. ",
-      catName + " war vor "+zeit+" in " + ort + ".",
-      catName + " hält sich in " + ort + " auf. ",
+        catName + " befand sich in " + ort + " vor " + zeit + " Minuten.",
+        catName + " trieb sich vor" + zeit + " Minuten  in " + ort +" herum.",
+        catName + " war vor " + zeit + " in " + ort + ".",
+        catName + " hat sich vor " + zeit + " Minuten in " + ort + " aufgehalten.",
+        catName + " ist vor " + zeit + " Minuten in " + ort + "herumgeflitzt",
+        catName + " springt in " + ort + " herum ",
+        catName + " rennt in " + ort + " herum.",
+        catName + " wurde vor " + zeit + " Minuten in " + ort + "gesehen."
     ];
 
     // Get a random space fact from the space facts list

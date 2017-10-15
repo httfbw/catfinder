@@ -5,15 +5,16 @@ AWS.config.loadFromPath('./config.json');
 
 // Create the DynamoDB service object
 ddb = new AWS.DynamoDB({apiVersion: '2012-10-08'});
+var catname = "Bla";
 
 var params = {
   TableName: 'catfinder',
   Key: {
     "name": {
-        "S": "Mietze"
+        "S": catname
     }
-  },
-  ProjectionExpression: 'lat, lon'
+  }//,
+  //ProjectionExpression: 'ort, zeit'
 };
 
 // Call DynamoDB to add the item to the table
@@ -31,6 +32,6 @@ ddb.getItem(params, function(err, data) {
     if (err) {
       console.log("Error", err);
     } else {
-      console.log("Success", data.Item.lat.S);
+      console.log("Success", data.Item);
     }
   });
