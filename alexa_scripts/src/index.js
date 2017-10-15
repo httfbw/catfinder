@@ -132,7 +132,7 @@ function handleNewFindRequest(intent, response) {
             timestamp = data.Item.zeit.S;
         }
 
-        
+
         var diffInMinutes = Math.round((Math.round((new Date).getTime() / 1000) - parseInt(data.Item.zeit.S)) / 60)      
         var zeit = diffInMinutes;
 
@@ -140,7 +140,7 @@ function handleNewFindRequest(intent, response) {
     var antworten = [
         catName + " befand sich in " + ort + " vor " + zeit + " Minuten.",
         catName + " trieb sich vor" + zeit + " Minuten  in " + ort +" herum.",
-        catName + " war vor " + zeit + " in " + ort + ".",
+        catName + " war vor " + zeit + " Minuten in " + ort + ".",
         catName + " hat sich vor " + zeit + " Minuten in " + ort + " aufgehalten.",
         catName + " ist vor " + zeit + " Minuten in " + ort + "herumgeflitzt",
         catName + " springt in " + ort + " herum ",
